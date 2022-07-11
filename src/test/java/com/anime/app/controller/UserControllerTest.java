@@ -1,10 +1,11 @@
-package com.anime.app;
+package com.anime.app.controller;
 
 import com.anime.app.domain.Role;
 import com.anime.app.dto.UserDTO;
 import com.anime.app.repository.RoleRepository;
 import com.anime.app.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.catalina.connector.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,6 +49,7 @@ public class UserControllerTest {
   @Test
   void CreateUser201() throws Exception {
     Mockito.when(userRepository.findUserByEmail(Mockito.any())).thenReturn(null);
+    Mockito.when(userRepository.findUserByUserName(Mockito.any())).thenReturn(null);
     Mockito.when(roleRepository.findRoleByName(Mockito.any())).thenReturn(role);
 
     RequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -59,6 +61,6 @@ public class UserControllerTest {
     MvcResult result = mockMvc.perform(requestBuilder).andReturn();
     MockHttpServletResponse response = result.getResponse();
 
-    Assertions.assertEquals(201, response.getStatus());
+    Assertions.assertEquals(Response.SC_CREATED, response.getStatus());
   }
 }

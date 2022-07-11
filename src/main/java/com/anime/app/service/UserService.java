@@ -19,19 +19,26 @@ public class UserService {
   public final RoleRepository roleRepository;
 
   public void createUser(UserDTO userDTO) {
-    // TODO: lanzar una busqueda por email para lanzar una excepcion de que ya existe
+    // TODO: falta la integracion al bucket para guardar la img
     var exists = userRepository.findUserByEmail(userDTO.getEmail());
 
     if (exists != null) {
-      throw new Conflict("EL USUARIO YA EXISTE");
+      throw new Conflict("EL E-MAIL YA EXISTE");
     }
 
-    var user = new User(userDTO);
+    exists = userRepository.findUserByUserName(userDTO.getUserName());
+
+    if (exists != null) {
+      throw new Conflict("EL NOMBRE DE USUARIO YA EXISTE");
+    }
+
     var role = roleRepository.findRoleByName("ROLE_USER");
 
     if (role == null) {
       throw new BadRequest("NO HAY ROLES REGISTRADOS EN LA DB");
     }
+
+    var user = new User(userDTO);
 
     user.setRoles(List.of(role));
     userRepository.save(user);
