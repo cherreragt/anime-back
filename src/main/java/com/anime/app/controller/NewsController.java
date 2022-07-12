@@ -17,7 +17,7 @@ public class NewsController {
     public final NewsService newsService;
 
     @PostMapping(path = "/save")
-    public ResponseEntity save(@RequestBody NewsDTO newsDTO) {
+    public ResponseEntity<NewsDTO> save(@RequestBody NewsDTO newsDTO) {
         newsService.createNews(newsDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
