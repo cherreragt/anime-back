@@ -19,7 +19,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class NewsService {
     public final NewsRepository newsRepository;
-    public final UserRepository userRepository;
 
     public void createNews(NewsDTO newsDTO) {
         // TODO falta integracion al bucket
@@ -72,26 +71,6 @@ public class NewsService {
         }
 
         Optional<News> news = newsRepository.findById(newsId);
-
-        if (news.isEmpty()) {
-            throw new NoContent("SIN CONTENIDO");
-        }
-
-        return news;
-    }
-
-    public List<News> getUserNews(Long userId) {
-        if (userId == null || userId == 0) {
-            throw new BadRequest("DEBES ESPECIFICAR EL ID");
-        }
-
-        var exists = userRepository.findById(userId);
-
-        if (exists.isEmpty()) {
-            throw new NoContent("NO EXISTE NINGUN USUARIO CON ESE ID");
-        }
-
-        List<News> news = newsRepository.findByAuthorId(userId);
 
         if (news.isEmpty()) {
             throw new NoContent("SIN CONTENIDO");

@@ -18,7 +18,6 @@ import java.util.List;
 public class UserController {
 
   public final UserService userService;
-  public final NewsService newsService;
 
   @PostMapping
   public ResponseEntity<UserDTO> test(
@@ -30,6 +29,6 @@ public class UserController {
 
   @GetMapping(path = "/{id}/news")
   public ResponseEntity<List<News>> getUserNews(@PathVariable Long id) {
-    return new ResponseEntity<>(newsService.getUserNews(id), HttpStatus.OK);
+    return new ResponseEntity<>(userService.getUserNews(id), HttpStatus.OK);
   }
 }

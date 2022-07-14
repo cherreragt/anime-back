@@ -34,6 +34,8 @@ class NewsControllerTest {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
+    private final Long NEWS_ID = 1L;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -48,9 +50,7 @@ class NewsControllerTest {
     }
 
     @Test
-    public void createNews() throws Exception {
-        Mockito.when(newsRepository.findByAuthorId(Mockito.any())).thenReturn(null);
-
+    void createNews() throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post(URL)
                 .content(objectMapper.writeValueAsString(newsDTO))
@@ -64,7 +64,7 @@ class NewsControllerTest {
     }
 
     @Test
-    public void updateNews() throws Exception {
+    void updateNews() throws Exception {
         News news = new News();
 
         Mockito.when(newsRepository.findById(Mockito.any())).thenReturn(Optional.of(news));
@@ -84,15 +84,14 @@ class NewsControllerTest {
     }
 
     @Test
-    public void deleteNews() throws Exception {
+    void deleteNews() throws Exception {
         News news = new News();
-        Long newsId = 1L;
-        news.setId(newsId);
+        news.setId(NEWS_ID);
 
         Mockito.when(newsRepository.findById(Mockito.any())).thenReturn(Optional.of(news));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .delete(URL+"/"+newsId)
+                .delete(URL + "/" + NEWS_ID)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -103,7 +102,7 @@ class NewsControllerTest {
     }
 
     @Test
-    public void getAllNews() throws Exception {
+    void getAllNews() throws Exception {
         List<News> newsList = new ArrayList<News>();
 
         News news = new News();
@@ -131,17 +130,15 @@ class NewsControllerTest {
     }
 
     @Test
-    public void getNewsById() throws Exception {
-        Long newsId = 1L;
-
+    void getNewsById() throws Exception {
         News news = new News();
-        news.setId(newsId);
+        news.setId(NEWS_ID);
         news.setTitle("test pijudo");
 
         Mockito.when(newsRepository.findById(Mockito.any())).thenReturn(Optional.of(news));
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get(URL+"/"+newsId)
+                .get(URL + "/" + NEWS_ID)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
