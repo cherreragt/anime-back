@@ -5,6 +5,7 @@ import com.anime.app.domain.User;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -16,13 +17,13 @@ public class UserDTO {
   private String password;
   private String token;
   private String sex;
-  private String birthday;
+  private Date birthday;
   private String aboutMe;
   private String avatar;
   private Boolean active;
   private String wallpaper;
   private String userName;
-  private String registerDate;
+  private Date registerDate;
   // private List<Role> roles;
 
   public UserDTO (User user) {

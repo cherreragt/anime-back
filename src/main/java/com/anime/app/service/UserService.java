@@ -9,6 +9,7 @@ import com.anime.app.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -37,6 +38,8 @@ public class UserService {
     if (role == null) {
       throw new BadRequest("NO HAY ROLES REGISTRADOS EN LA DB");
     }
+
+    userDTO.setRegisterDate(new Date());
 
     var user = new User(userDTO);
 

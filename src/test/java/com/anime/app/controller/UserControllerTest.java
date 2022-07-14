@@ -1,7 +1,9 @@
 package com.anime.app.controller;
 
+import com.anime.app.domain.News;
 import com.anime.app.domain.Role;
 import com.anime.app.dto.UserDTO;
+import com.anime.app.repository.NewsRepository;
 import com.anime.app.repository.RoleRepository;
 import com.anime.app.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +24,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Optional;
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class UserControllerTest {
@@ -36,14 +40,23 @@ public class UserControllerTest {
   @MockBean
   private UserRepository userRepository;
 
+  @MockBean
+  private NewsRepository newsRepository;
+
   private UserDTO user;
   private Role role;
+
+  private News news;
+
   @BeforeEach
   void setUp() {
     user = new UserDTO();
     role = new Role();
     role.setId(1L);
     role.setName("ROLE_USER");
+    news = new News();
+    news.setId(1L);
+    news.setTitle("probando esta mierda");
   }
 
   @Test
@@ -51,6 +64,7 @@ public class UserControllerTest {
     Mockito.when(userRepository.findUserByEmail(Mockito.any())).thenReturn(null);
     Mockito.when(userRepository.findUserByUserName(Mockito.any())).thenReturn(null);
     Mockito.when(roleRepository.findRoleByName(Mockito.any())).thenReturn(role);
+    Mockito.when(newsRepository.findById(Mockito.any())).thenReturn(Optional.ofNullable(news));
 
     RequestBuilder requestBuilder = MockMvcRequestBuilders
             .post(URL)

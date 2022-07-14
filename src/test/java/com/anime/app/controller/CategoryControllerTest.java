@@ -46,7 +46,7 @@ class CategoryControllerTest {
         Mockito.when(categoryRepository.findCategoryByName((Mockito.any()))).thenReturn(null);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post(URL+"/save")
+                .post(URL)
                 .content(objectMapper.writeValueAsString(categoryDTO))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);

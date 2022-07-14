@@ -2,6 +2,7 @@ package com.anime.app.domain;
 
 
 import com.anime.app.dto.RoleDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.beans.BeanUtils;
 
@@ -27,6 +28,7 @@ public class Role {
           joinColumns = @JoinColumn(name = "role_id"),//id de la tabla actual es decir role = role_id
           inverseJoinColumns = @JoinColumn(name = "user_id")//tabla secundaria
   )
+  @JsonIgnore
   private List<User> users;
 
   public Role(RoleDTO roleDTO) {

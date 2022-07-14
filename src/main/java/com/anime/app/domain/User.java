@@ -2,6 +2,7 @@ package com.anime.app.domain;
 
 import com.anime.app.dto.RoleDTO;
 import com.anime.app.dto.UserDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import org.apache.catalina.UserDatabase;
 import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -25,7 +27,7 @@ public class User {
   private String password;
   private String token;
   private String sex;
-  private String birthday;
+  private Date birthday;
   @Column(name = "about_me")
   private String aboutMe;
   private String avatar;
@@ -34,8 +36,7 @@ public class User {
   @Column(name = "username")
   private String userName;
   @Column(name = "register_date")
-  private String registerDate;
-
+  private Date registerDate;
 
   @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JoinTable(
@@ -44,6 +45,9 @@ public class User {
           inverseJoinColumns = @JoinColumn(name = "role_id")
   )
   private List<Role> roles;
+
+  @OneToMany(mappedBy = "user")
+  private List<News> news;
 
   public User(UserDTO dto) {
     BeanUtils.copyProperties(dto, this);

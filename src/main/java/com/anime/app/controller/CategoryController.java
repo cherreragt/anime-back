@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CategoryController {
     public final CategoryService categoryService;
 
-    @PostMapping(path = "/save")
+    @PostMapping
     public ResponseEntity<CategoryDTO> save(@RequestBody CategoryDTO categoryDTO)
     {
         categoryService.createCategory(categoryDTO);

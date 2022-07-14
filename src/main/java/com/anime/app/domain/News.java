@@ -1,6 +1,7 @@
 package com.anime.app.domain;
 
 import com.anime.app.dto.NewsDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Setter
@@ -29,6 +31,11 @@ public class News {
 
     @Column(name = "created_at")
     private Date createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "author_id", insertable = false, updatable = false)
+    @JsonIgnore
+    private User user;
 
     public News(NewsDTO dto){ BeanUtils.copyProperties(dto, this); }
 }
