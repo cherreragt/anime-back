@@ -27,12 +27,28 @@ public class NewsService {
 
     public void updateNews(NewsDTO newsDTO) {
         // TODO falta integracion al bucket
+        if (newsDTO == null) {
+            throw new BadRequest("DEBES MANDAR UNA NEWS PARA ACTUALIZARLA");
+        }
+
+        var exists = newsRepository.findById(newsDTO.getId());
+
+        if (exists.isEmpty()) {
+            throw new NoContent("NO SE ENCONTRO NINGUNA NEWS CON ESE ID");
+        }
+
         newsRepository.save(new News(newsDTO));
     }
 
     public void deleteNews(Long newsId) {
         if (newsId == null || newsId == 0) {
             throw new BadRequest("DEBES ESPECIFICAR EL ID");
+        }
+
+        var exists = newsRepository.findById(newsId);
+
+        if (exists.isEmpty()) {
+            throw new NoContent("NO SE ENCONTRO NINGUNA NEWS CON ESE ID");
         }
 
         newsRepository.deleteById(newsId);
