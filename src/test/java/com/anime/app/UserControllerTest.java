@@ -1,4 +1,4 @@
-package com.anime.app.controller;
+package com.anime.app;
 
 import com.anime.app.domain.News;
 import com.anime.app.domain.Role;
@@ -6,6 +6,7 @@ import com.anime.app.dto.UserDTO;
 import com.anime.app.repository.NewsRepository;
 import com.anime.app.repository.RoleRepository;
 import com.anime.app.repository.UserRepository;
+import com.anime.app.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.catalina.connector.Response;
 import org.junit.jupiter.api.Assertions;
@@ -19,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;

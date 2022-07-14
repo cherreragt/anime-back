@@ -6,6 +6,7 @@ import com.anime.app.exceptions.BadRequest;
 import com.anime.app.exceptions.Conflict;
 import com.anime.app.exceptions.NoContent;
 import com.anime.app.repository.NewsRepository;
+import com.anime.app.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class NewsService {
     public final NewsRepository newsRepository;
+    public final UserRepository userRepository;
 
     public void createNews(NewsDTO newsDTO) {
         // TODO falta integracion al bucket
@@ -81,6 +83,12 @@ public class NewsService {
     public List<News> getUserNews(Long userId) {
         if (userId == null || userId == 0) {
             throw new BadRequest("DEBES ESPECIFICAR EL ID");
+        }
+
+        var exists = userRepository.findById(userId);
+
+        if (exists.isEmpty()) {
+            throw new NoContent("NO EXISTE NINGUN USUARIO CON ESE ID");
         }
 
         List<News> news = newsRepository.findByAuthorId(userId);

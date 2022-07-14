@@ -1,4 +1,4 @@
-package com.anime.app.controller;
+package com.anime.app;
 
 import com.anime.app.dto.CategoryDTO;
 import com.anime.app.repository.CategoryRepository;
