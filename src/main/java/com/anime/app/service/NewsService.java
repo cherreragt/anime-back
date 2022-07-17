@@ -18,7 +18,7 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class NewsService {
-    public final NewsRepository newsRepository;
+    private final NewsRepository newsRepository;
 
     public void createNews(NewsDTO newsDTO) {
         // TODO falta integracion al bucket

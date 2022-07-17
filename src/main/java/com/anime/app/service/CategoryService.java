@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class CategoryService {
-    public final CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     public void createCategory(CategoryDTO categoryDTO) {
         var exists = categoryRepository.findCategoryByName(categoryDTO.getName());

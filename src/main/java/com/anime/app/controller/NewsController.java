@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequestMapping(path = "/api/news")
 @AllArgsConstructor
 public class NewsController {
-    public final NewsService newsService;
+    private final NewsService newsService;
 
     @PostMapping
     public ResponseEntity<NewsDTO> createNews(@RequestBody NewsDTO newsDTO) {
