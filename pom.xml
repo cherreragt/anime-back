@@ -57,14 +57,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/software.amazon.awssdk/s3 -->
-        <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>s3</artifactId>
-            <version>2.17.209</version>
-        </dependency>
-
-
         <!--B2 Nativo-->
         <dependency>
             <groupId>com.backblaze.b2</groupId>

@@ -1,5 +1,6 @@
 package com.anime.app.utils;
 
+import com.anime.app.dto.B2FileResponse;
 import com.anime.app.exceptions.BadRequest;
 import com.anime.app.exceptions.ErrorInternal;
 import com.backblaze.b2.client.B2StorageClient;
@@ -17,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -25,6 +27,11 @@ import java.util.concurrent.Executors;
 public class Utils {
   @Value("${s3.bucket}")
   private String bucketName;
+
+  @Value("${s3.access.key}")
+  private String accessKey;
+  @Value("${s3.secret.key}")
+  private String secretKey;
 
   private final B2StorageClient b2StorageClient;
 
@@ -99,13 +106,32 @@ public class Utils {
     });
   }
 
-  public String preSignFile(String keyName) {
+  public B2FileResponse preSignFile(String keyName){
     if (keyName.isEmpty()) {
       throw new BadRequest("keyName no puede ser nulo");
     }
 
+    try {
+      B2Bucket bucket = b2StorageClient.getBucketOrNullByName(bucketName);
 
-    return "";
+      B2DownloadByNameRequest request = B2DownloadByNameRequest
+              .builder(bucketName, keyName)
+              .setServerSideEncryption(B2FileSseForRequest.createSseB2Aes256())
+              .build();
+
+      B2FileResponse b2FileResponse = new B2FileResponse();
+      b2FileResponse.setResource(b2StorageClient.getDownloadByNameUrl(request));
+      b2FileResponse.setAuthorization(b2StorageClient
+              .getDownloadAuthorization(B2GetDownloadAuthorizationRequest
+                      .builder(
+                              bucket
+                              .getBucketId(), keyName, 3600*3)
+                      .build()
+              ).getAuthorizationToken());
+      return b2FileResponse;
+    } catch (B2Exception e) {
+      throw new ErrorInternal(e.getMessage());
+    }
   }
 
 
