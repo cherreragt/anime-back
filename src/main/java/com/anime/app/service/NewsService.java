@@ -21,6 +21,10 @@ public class NewsService {
     private final NewsRepository newsRepository;
 
     public void createNews(NewsDTO newsDTO) {
+        if (newsDTO == null) {
+            throw new BadRequest("DEBES MANDAR UNA NEWS PARA CREARLA");
+        }
+
         // TODO falta integracion al bucket
         newsDTO.setCreatedAt(new Date());
         newsRepository.save(new News(newsDTO));
@@ -30,6 +34,10 @@ public class NewsService {
         // TODO falta integracion al bucket
         if (newsDTO == null) {
             throw new BadRequest("DEBES MANDAR UNA NEWS PARA ACTUALIZARLA");
+        }
+
+        if (newsDTO.getId() == null || newsDTO.getId() == 0) {
+            throw new BadRequest("DEBES ESPECIFICAR EL ID");
         }
 
         var exists = newsRepository.findById(newsDTO.getId());

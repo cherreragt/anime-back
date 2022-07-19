@@ -1,6 +1,7 @@
 package com.anime.app.controller;
 
 import com.anime.app.domain.News;
+import com.anime.app.domain.UserSocialNetwork;
 import com.anime.app.dto.UserDTO;
 import com.anime.app.service.NewsService;
 import com.anime.app.service.UserService;
@@ -65,5 +66,10 @@ public class UserController {
   @GetMapping(path = "/{id}/news")
   public ResponseEntity<List<News>> getUserNews(@PathVariable Long id) {
     return new ResponseEntity<>(userService.getUserNews(id), HttpStatus.OK);
+  }
+
+  @GetMapping(path = "/{id}/social-network")
+  public ResponseEntity<List<UserSocialNetwork>> getUserSocialNetworks(@PathVariable Long id) {
+    return new ResponseEntity<>(userService.getUserSocialNetworks(id), HttpStatus.OK);
   }
 }

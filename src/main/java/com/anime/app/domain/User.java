@@ -49,6 +49,9 @@ public class User {
   @OneToMany(mappedBy = "user")
   private List<News> news;
 
+  @OneToMany(mappedBy = "user")
+  private List<UserSocialNetwork> socialNetworks;
+
   public User(UserDTO dto) {
     BeanUtils.copyProperties(dto, this);
   }

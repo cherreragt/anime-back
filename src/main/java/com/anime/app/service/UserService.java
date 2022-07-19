@@ -1,6 +1,7 @@
 package com.anime.app.service;
 
 import com.anime.app.domain.News;
+import com.anime.app.domain.UserSocialNetwork;
 import com.anime.app.dto.B2FileResponse;
 import com.anime.app.dto.UserDTO;
 import com.anime.app.exceptions.BadRequest;
@@ -104,5 +105,25 @@ public class UserService {
     }
 
     return news;
+  }
+
+  public List<UserSocialNetwork> getUserSocialNetworks(Long userId) {
+    if (userId == null || userId == 0) {
+      throw new BadRequest("DEBES ESPECIFICAR EL ID");
+    }
+
+    var exists = userRepository.findById(userId);
+
+    if (exists.isEmpty()) {
+      throw new NoContent("NO EXISTE NINGUN USUARIO CON ESE ID");
+    }
+
+    List<UserSocialNetwork> userSocialNetworks = exists.get().getSocialNetworks();
+
+    if (userSocialNetworks.isEmpty()) {
+      throw new NoContent("SIN CONTENIDO");
+    }
+
+    return userSocialNetworks;
   }
 }
