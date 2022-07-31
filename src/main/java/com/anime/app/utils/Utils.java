@@ -106,7 +106,7 @@ public class Utils {
     });
   }
 
-  public B2FileResponse preSignFile(String keyName){
+  public B2FileResponse preSignFile(String keyName) {
     if (keyName.isEmpty()) {
       throw new BadRequest("keyName no puede ser nulo");
     }

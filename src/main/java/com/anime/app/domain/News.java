@@ -21,9 +21,6 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "author_id")
-    private Long authorId;
-
     private String title;
     private String url;
     private String description;
@@ -32,9 +29,9 @@ public class News {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @ManyToOne
-    @JoinColumn(name = "author_id", insertable = false, updatable = false)
     @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "author_id")
     private User user;
 
     public News(NewsDTO dto){ BeanUtils.copyProperties(dto, this); }
